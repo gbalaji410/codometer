@@ -14,6 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<testng.version>6.9.5</testng.version>
 		<!-- Sonar -->
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>/Users/bganes1/Balaji/Codeathon/jacoco.exec</sonar.jacoco.reportPath>
@@ -46,12 +47,12 @@
 						<configuration>
 							<hostname>localhost</hostname>
 							<port>6300</port>
-							<outputFile>/Users/bganes1/Balaji/Codeathon/jacoco.exec</outputFile>
+							<outputFile>${sonar.jacoco.reportPath}</outputFile>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.6.201602180812</version>
@@ -62,12 +63,13 @@
 				<executions>
 					<execution>
 						<id>agent</id>
+						<phase>compile</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 </project>
