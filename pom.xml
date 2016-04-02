@@ -17,7 +17,7 @@
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>/Users/bganes1/Balaji/Codeathon/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.jacoco.itReportPath>/Users/ymahali/projects/HackDay2016/report/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<sonar.language>java</sonar.language>
 	</properties>
 
@@ -37,6 +37,28 @@
 				<groupId>org.helmetsrequired</groupId>
 				<artifactId>jacocotogo-maven-plugin</artifactId>
 				<version>1.1</version>
+				<configuration>
+					<hostname>localhost</hostname>
+					<port>6300</port>
+					<outputFile>${sonar.jacoco.itReportPath}</outputFile>
+					<sources>
+						<source>
+							<type>TCP</type>
+							<hostname>localhost</hostname>
+							<port>6300</port>
+							<outputFile>${sonar.jacoco.itReportPath}.1</outputFile>
+						</source>
+						<source>
+							<type>TCP</type>
+							<hostname>localhost</hostname>
+							<port>6300</port>
+							<outputFile>${sonar.jacoco.itReportPath}.2</outputFile>
+						</source>
+					</sources>
+					<merge>true</merge>
+					<mergeFile>${sonar.jacoco.itReportPath}</mergeFile>
+				</configuration>
+<!-- 				
 				<executions>
 					<execution>
 						<id>get_integration_test_coverage</id>
@@ -44,15 +66,12 @@
 						<goals>
 							<goal>tcp</goal>
 						</goals>
-						<configuration>
-							<hostname>localhost</hostname>
-							<port>6300</port>
-							<outputFile>${sonar.jacoco.reportPath}</outputFile>
-						</configuration>
 					</execution>
 				</executions>
+ -->				
 			</plugin>
-			<!-- <plugin>
+			 
+<!-- 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.6.201602180812</version>
@@ -69,7 +88,8 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
-		</plugins>
+			</plugin>
+ -->		
+ 		</plugins>
 	</build>
 </project>
