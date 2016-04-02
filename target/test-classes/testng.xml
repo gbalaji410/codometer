@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Unit-Tests" verbose="1">
-	<test name="Codometer-UnitTest">
-		<packages>
-			<package name="com.walmartlabs.codeathon" />
-		</packages>
-	</test>
-</suite>
