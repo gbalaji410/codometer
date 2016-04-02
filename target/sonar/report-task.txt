@@ -1,5 +1,0 @@
-projectKey=com.walmartlabs.codeathon:codometer
-serverUrl=http://localhost:9000
-dashboardUrl=http://localhost:9000/dashboard/index/com.walmartlabs.codeathon:codometer
-ceTaskId=AVPN6w1YgIG6yHU_liDK
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVPN6w1YgIG6yHU_liDK
