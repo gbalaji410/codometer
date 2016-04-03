@@ -14,11 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<testng.version>6.9.5</testng.version>
 		<!-- Sonar -->
-		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.itReportPath>/Users/ymahali/projects/HackDay2016/report/jacoco-it.exec</sonar.jacoco.itReportPath>
-		<sonar.language>java</sonar.language>
+		<jacoco.itReportPath></jacoco.itReportPath>
+		<codecoverage.hosts></codecoverage.hosts>
 	</properties>
 
 	<dependencies>
@@ -38,59 +35,11 @@
 				<artifactId>jacocotogo-maven-plugin</artifactId>
 				<version>1.2-SNAPSHOT</version>
 				<configuration>
-					<hosts>localhost:6300,localhost:6300</hosts>
-					<hostname>localhost</hostname>
-					<port>6300</port>
-					<outputFile>${sonar.jacoco.itReportPath}</outputFile>
-					<sources>
-						<source>
-							<type>TCP</type>
-							<hostname>localhost</hostname>
-							<port>6300</port>
-							<outputFile>${sonar.jacoco.itReportPath}.1</outputFile>
-						</source>
-						<source>
-							<type>TCP</type>
-							<hostname>localhost</hostname>
-							<port>6300</port>
-							<outputFile>${sonar.jacoco.itReportPath}.2</outputFile>
-						</source>
-					</sources>
 					<merge>true</merge>
-					<mergeFile>${sonar.jacoco.itReportPath}</mergeFile>
+					<mergeFile>${jacoco.itReportPath}</mergeFile>
+					<hosts>${codecoverage.hosts}</hosts>
 				</configuration>
-<!-- 				
-				<executions>
-					<execution>
-						<id>get_integration_test_coverage</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>tcp</goal>
-						</goals>
-					</execution>
-				</executions>
- -->				
 			</plugin>
-			 
-<!-- 			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.6.201602180812</version>
-				<configuration>
-					<destFile>${sonar.jacoco.reportPath}</destFile>
-					<append>true</append>
-				</configuration>
-				<executions>
-					<execution>
-						<id>agent</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
- -->		
  		</plugins>
 	</build>
 </project>
