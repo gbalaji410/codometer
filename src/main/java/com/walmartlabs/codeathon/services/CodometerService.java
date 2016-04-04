@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.springframework.stereotype.Service;
 
-@Path("/codometer")
+@Path("/codometerservice")
 @Produces({ "application/json", "application/xml" })
 @Service(value="codometerService")
 public class CodometerService {
