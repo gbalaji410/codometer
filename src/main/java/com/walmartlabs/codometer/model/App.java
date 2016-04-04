@@ -1,4 +1,4 @@
-package com.walmartlabs.codeathon;
+package com.walmartlabs.codometer.model;
 
 /**
  * Hello world!

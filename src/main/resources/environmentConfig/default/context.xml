@@ -8,19 +8,20 @@
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd                     
 		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 			
-	<context:component-scan base-package="com.walmartlabs.codeathon.services" />		
+	<context:component-scan base-package="com.walmartlabs.codometer.services" />		
 	<context:annotation-config />
 <!-- 	
 	<import resource="classpath:/META-INF/cxf/cxf.xml" />
 	<import resource="classpath:/META-INF/cxf/cxf-servlet.xml" /> -->
-
+<bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+</bean>
 <jaxrs:server id="codometerServer" address="/">
 		<jaxrs:serviceBeans>
 			<ref bean="codometerService" />
 		</jaxrs:serviceBeans>
-		<!-- <jaxrs:providers>
-			<ref bean="jacksonJsonProvider" />
-		</jaxrs:providers> -->
+		<jaxrs:providers>
+			<ref bean="jacksonProvider" />
+		</jaxrs:providers>
 </jaxrs:server>
 
 </beans>
