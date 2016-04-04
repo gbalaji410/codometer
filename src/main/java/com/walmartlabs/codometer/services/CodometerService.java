@@ -1,17 +1,18 @@
 package com.walmartlabs.codometer.services;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.walmartlabs.codometer.manager.JenkinsManager;
 import com.walmartlabs.codometer.model.Computes;
@@ -60,9 +61,10 @@ public class CodometerService {
         @POST
         @Path("/triggerBuild")
         @Produces(value="application/json")
-        public Response triggerBuild(@RequestParam(value = "gitUrl") String gitUrl,
-                @RequestParam(value = "branchName") String branchName,
-                @RequestParam(value = "hosts") String hosts) {
+        //@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+        public Response triggerBuild(@QueryParam(value = "gitUrl") String gitUrl,
+                @QueryParam(value = "branchName") String branchName,
+                @QueryParam(value = "hosts") String hosts) {
             try {
                 jenkinsManager.triggerBuild(gitUrl, branchName, hosts);
             } catch (Exception e) {
