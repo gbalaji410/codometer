@@ -1,6 +1,7 @@
 package com.walmartlabs.codometer.services;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -8,8 +9,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.walmartlabs.codometer.manager.JenkinsManager;
 import com.walmartlabs.codometer.model.Computes;
 import com.walmartlabs.codometer.rest.client.CodometerOneOpsClient;
 
@@ -18,6 +22,9 @@ import com.walmartlabs.codometer.rest.client.CodometerOneOpsClient;
 @Service(value="codometerService")
 public class CodometerService {
 	
+    @Autowired
+    private JenkinsManager jenkinsManager;
+    
 	@GET
 	public Response getCoverageData() {
 		
@@ -49,4 +56,22 @@ public class CodometerService {
 		ResponseBuilder builder = Response.ok(computes);
 		return builder.build();
 	}
+
+        @POST
+        @Path("/triggerBuild")
+        @Produces(value="application/json")
+        public Response triggerBuild(@RequestParam(value = "gitUrl") String gitUrl,
+                @RequestParam(value = "branchName") String branchName,
+                @RequestParam(value = "hosts") String hosts) {
+            try {
+                jenkinsManager.triggerBuild(gitUrl, branchName, hosts);
+            } catch (Exception e) {
+                    e.printStackTrace();
+                    return Response.status(Status.BAD_REQUEST).build();
+            }
+            
+            ResponseBuilder builder = Response.ok();
+            return builder.build();
+        }
+	
 }
