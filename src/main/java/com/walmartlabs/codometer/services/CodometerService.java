@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,4 +77,31 @@ public class CodometerService {
             return builder.build();
         }
 	
+        @POST
+        @Path("/triggerBuildOneOps")
+        @Produces(value="application/json")
+        //@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+        public Response triggerBuildOneOps(@QueryParam(value = "gitUrl") String gitUrl,
+                @QueryParam(value = "branchName") String branchName,
+                @QueryParam(value = "orgName") String orgName,
+    			@QueryParam(value = "assemblyName") String assemblyName,
+    			@QueryParam(value = "envName") String envName,
+    			@QueryParam(value = "platform") String platform,
+    			@QueryParam(value = "token") String token) {
+            try {
+            	Computes computes = null;
+        		
+        		CodometerOneOpsClient client = new CodometerOneOpsClient();
+
+        		computes = client.getComputeList(orgName, assemblyName, envName, platform, token);
+        		
+                jenkinsManager.triggerBuild(gitUrl, branchName, StringUtils.join(computes.getComputes(), ","));
+            } catch (Exception e) {
+                    e.printStackTrace();
+                    return Response.status(Status.BAD_REQUEST).build();
+            }
+            
+            ResponseBuilder builder = Response.ok();
+            return builder.build();
+        }
 }
