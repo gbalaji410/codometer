@@ -1,12 +1,13 @@
 package com.walmartlabs.codometer.services;
 
-import javax.ws.rs.Consumes;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -49,7 +50,23 @@ public class CodometerService {
 		Computes computes = null;
 		
 		try {
-			computes = client.getComputeList(orgName, assemblyName, envName, platform, token);
+	                if (platform == null || "".equals(platform.trim())) {
+	                    List<String> platformList = client.getPlatformList(orgName, assemblyName, envName, token);
+	                    
+	                    List<String> computeIps = new ArrayList<String>();
+	                    for (String platformName : platformList) {
+	                        Computes platformComputes = client.getComputeList(orgName, assemblyName, envName, platformName, token);
+	                        
+	                        if (platformComputes != null && platformComputes.getComputes() != null) {
+	                            computeIps.addAll(platformComputes.getComputes());
+	                        }
+                            }
+	                    
+	                    computes = new Computes();
+	                    computes.setComputes(computeIps);
+	                } else {
+	                    computes = client.getComputeList(orgName, assemblyName, envName, platform, token);
+	                }
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).build();
